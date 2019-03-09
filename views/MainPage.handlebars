@@ -1,0 +1,185 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <title>Spring Trophy</title>
+</head>
+<body class="white lighten-3">
+  <!-- NAVBAR -->
+  <nav class="z-depth-0 orange">
+    <div class="nav-wrapper container">
+      <a href="#" class="brand-logo white-text">Spring Trophy Registration Page</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li class="logged-in" style="display:none">
+            <a href="#" class="white-text modal-trigger" data-target="modal-account">Account</a>
+          </li>
+          <li class="logged-in" style="display:none">
+            <a href="#" class="white-text" id="logout">Logout</a>
+          </li>
+          <li class="logged-in" style="display:none">
+            <a href="#" class="white-text modal-trigger" data-target="modal-create">Create Guide</a>
+          </li>
+          <li class="logged-out" style="display:none">
+            <a href="#" class="white-text modal-trigger" data-target="modal-login">Login</a>
+          </li>
+          <li class="logged-out" style="display:none">
+            <a href="#" class="white-text modal-trigger" data-target="modal-signup">Sign up</a>
+          </li>
+        </span>
+      </ul>
+    </div>
+  </nav>
+  <!-- SIGN UP MODAL -->
+  <div id="modal-signup" class="modal">
+    <div class="modal-content">
+      <h4>Sign up</h4><br />
+      <form id="signup-form">
+        <div class="input-field">
+          <input type="email" id="signup-email" required />
+          <label for="signup-email">Email address</label>
+        </div>
+        <div class="input-field">
+          <input type="password" id="signup-password" required />
+          <label for="signup-password">Choose password</label>
+        </div>
+        <div class="input-field">
+          <input type="text" id="signup-bio" required />
+          <label for="signup-bio">Enter Your Bio</label>
+        </div>
+        <button class="btn yellow darken-2 z-depth-0">Sign up</button>
+      </form>
+    </div>
+  </div>
+  <!-- LOGIN MODAL -->
+  <div id="modal-login" class="modal">
+    <div class="modal-content">
+      <h4>Login</h4><br />
+      <form id="login-form">
+        <div class="input-field">
+          <input type="email" id="login-email" required />
+          <label for="login-email">Email address</label>
+        </div>
+        <div class="input-field">
+          <input type="password" id="login-password" required />
+          <label for="login-password">Your password</label>
+        </div>
+        <button class="btn yellow darken-2 z-depth-0">Login</button>
+      </form>
+    </div>
+  </div>
+  <!-- ACCOUNT MODAL -->
+  <div id="modal-account" class="modal">
+    <div class="modal-content center-align">
+      <h4>Account details</h4><br />
+      <div class="account-details"></div>
+      <div class="account-extras"></div>
+    </div>
+  </div>
+  <!-- CREATE GUIDE MODAL -->
+  <div id="modal-create" class="modal">
+    <div class="modal-content">
+      <h4>Create Guide</h4><br/>
+      <form id="create-form" >
+        <div class="input-field">
+          <input type="text" id="title" required>
+          <label for="title">Guide Title</label>
+        </div>
+        <div class="input-field">
+          <textarea id="content" class="materialize-textarea" required></textarea>
+          <label for="content">Guide Content</label>
+        </div>
+        <button class="btn yellow darken-2 z-depth-0">Create</button>
+      </form>
+    </div>
+  </div>
+  <div class="container">
+    <ul class="collapsible popout" id="raceList">
+
+    </ul>
+  </div>
+
+  <!-- Race List -->
+  <div class="container RaceList">
+    <table class="striped">
+        <thead>
+          <tr>
+              <th>Yarış Adı</th>
+              <th>Start Zamanı</th>
+              <th>Talimatlar</th>
+              <th>Tarih</th>
+              <th>Katılımcılar</th>
+              <th>İşlemler</th>
+          </tr>
+        </thead>          
+        <tbody id="raceTable">
+          
+        </tbody>  
+      </table>
+  </div>
+  <!-- GUIDE LIST -->
+  <div class="container" style="margin-top: 40px;">
+    <h4>Teknelerim &nbsp;<a class="waves-effect waves-light btn orange modal-trigger" data-target="modal-createYatch">Tekne Ekle</a></h4>
+    <ul class="collapsible z-depth-0 guides" style="border: none;">
+      
+    </ul>
+  </div>
+
+  <!--Racer List Modal -->
+  <div class="container" style="margin-top: 40px;">
+    <h4>Yarışçılarım &nbsp;<a class="waves-effect waves-light btn orange modal-trigger" data-target="modal-createCrew">Yarışçı Ekle</a></h4>
+      <div id="modal-createCrew" class="modal">
+    <div class="modal-content">
+      <h4>Yarışçı Kayıt</h4><br />
+      <form id="createRacer">
+        <div class="input-field">
+          <input type="text" id="racerName" required />
+          <label for="racerName">Name</label>
+        </div>
+        <div class="input-field">
+          <input type="text" id="racerLicenceNumber" required />
+          <label for="racerLicenceNumber">Licence Number</label>
+        </div>
+        <div class="input-field">
+          <input type="text" id="racerClub" required />
+          <label for="racerClub">Club</label>
+        </div>
+        <div class="input-field">
+          <input type="text" id="racerMobile" required />
+          <label for="racerMobile">Mobile Number</label>
+        </div>
+        <button class="btn yellow darken-2 z-depth-0">Sign Racer</button>
+      </form>
+    </div>
+  </div>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-firestore.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+    apiKey: "AIzaSyBDCgnKEdzqwnCNBa0quelrrDacqxvFrSk",
+    authDomain: "spring-trophy-mail-892ec.firebaseapp.com",
+    databaseURL: "https://spring-trophy-mail-892ec.firebaseio.com",
+    projectId: "spring-trophy-mail-892ec",
+    storageBucket: "spring-trophy-mail-892ec.appspot.com",
+    messagingSenderId: "787246748678"
+  };
+    firebase.initializeApp(config);
+    
+    // make auth and firestore references
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    // update firestore settings
+    db.settings({ timestampsInSnapshots: true });
+  </script>
+  <!-- Compiled and minified JavaScript -->
+  <script src="../public/scripts/auth.js"></script>
+  <script src="../public/scripts/materialize.js"></script>
+</body>
+</html>
