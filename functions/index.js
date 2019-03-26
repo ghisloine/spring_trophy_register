@@ -1,15 +1,16 @@
-const nodemailer = require('nodemailer');
+const functions = require('firebase-functions');
 const express = require('express');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const path = require('path');
 const app = express();
+const PDFDocument = require('pdfkit');
 
 
 //View Engine
 app.engine('handlebars', exphbs());
+app.set('views','./views');
 app.set('view engine', 'handlebars');
-
 //Body Parser Middleware
 
 app.use(bodyParser.urlencoded({ extended:false}));
@@ -18,8 +19,7 @@ app.use(bodyParser.json());
 // Static Folder
 app.use('/public',express.static(path.join(__dirname,'public')));
 
-
-app.get('/',(req,res) => {
+app.get('/',(req, res) => {
     res.render('MainPage');
 });
 
@@ -29,21 +29,9 @@ app.get('/register',(req, res) => {
 app.get('/teamregister',(req,res) => {
     res.render('TeamRegister');
 });
-
-var transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'leswosdesign@gmail.com',
-    pass: '123987as'
-  }
-});
-
-var mailOptions = {
-  from: 'HelloWorld@gmail.com',
-  to: 'burak.tagtekin@icloud.com',
-  subject: 'Sending Email using Node.js',
-  text: 'That was easy!'
-};
+app.get('/races',(req, res)=>{
+  res.render('Races');
+})
 
 /*transporter.sendMail(mailOptions, function(error, info){
   if (error) {
@@ -53,6 +41,8 @@ var mailOptions = {
   }
 });
 */
-app.listen(1453,function(){
-    console.log("Server Working ...");
-})
+// // Create and Deploy Your First Cloud Functions
+// // https://firebase.google.com/docs/functions/write-firebase-functions
+//
+
+exports.app = functions.https.onRequest(app);

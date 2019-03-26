@@ -5,35 +5,55 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <title>Spring Trophy</title>
 </head>
 <body class="white lighten-3">
   <!-- NAVBAR -->
-  <nav class="z-depth-0 orange">
+  <nav class="z-depth-0 orange lighten-1">
     <div class="nav-wrapper container">
       <a href="#" class="brand-logo white-text">Spring Trophy Registration Page</a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="large material-icons">dehaze</i></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li class="logged-in" style="display:none">
-            <a href="#" class="white-text modal-trigger" data-target="modal-account">Account</a>
+            <a href="#" class="white-text modal-trigger" data-target="modal-account"><b>Account</b></a>
           </li>
           <li class="logged-in" style="display:none">
-            <a href="#" class="white-text" id="logout">Logout</a>
+            <a href="#" class="white-text" id="logout"><b>Logout</b></a>
           </li>
           <li class="logged-in" style="display:none">
-            <a href="#" class="white-text modal-trigger" data-target="modal-create">Create Guide</a>
+            <a href="/races" class="white-text modal-trigger"><b>Yarışlar</b></a>
           </li>
           <li class="logged-out" style="display:none">
-            <a href="#" class="white-text modal-trigger" data-target="modal-login">Login</a>
+            <a href="#" class="white-text modal-trigger" data-target="modal-login"><b>Login</b></a>
           </li>
           <li class="logged-out" style="display:none">
-            <a href="#" class="white-text modal-trigger" data-target="modal-signup">Sign up</a>
+            <a href="#" class="white-text modal-trigger" data-target="modal-signup"><b>Sign up</b></a>
           </li>
         </span>
       </ul>
     </div>
   </nav>
+  <!--Mobile Navbar -->
+  <ul class="sidenav" id="mobile-demo"><br>
+    <li class="logged-in" style="display:none">
+            <a href="#" class="white-text modal-trigger orange" data-target="modal-account"><b>Account</b></a>
+          </li><br>
+          <li class="logged-in" style="display:none">
+            <a href="#" class="white-text orange" id="logoutMobile" onclick="logoutFunc()"><b>Logout</b></a>
+          </li><br>
+          <li class="logged-in" style="display:none">
+            <a href="/races" class="white-text modal-trigger orange"><b>Yarışlar</b></a>
+          </li><br>
+          <li class="logged-out" style="display:none">
+            <a href="#" class="white-text modal-trigger orange" data-target="modal-login"><b>Login</b></a>
+          </li><br>
+          <li class="logged-out" style="display:none">
+            <a href="#" class="white-text modal-trigger orange" data-target="modal-signup"><b>Sign up</b></a>
+          </li>
+  </ul>
+          
   <!-- SIGN UP MODAL -->
   <div id="modal-signup" class="modal">
     <div class="modal-content">
@@ -47,18 +67,16 @@
           <input type="password" id="signup-password" required />
           <label for="signup-password">Choose password</label>
         </div>
-        <div class="input-field">
-          <input type="text" id="signup-bio" required />
-          <label for="signup-bio">Enter Your Bio</label>
-        </div>
-        <button class="btn yellow darken-2 z-depth-0">Sign up</button>
+        <button class="btn orange darken-2 z-depth-0">Sign up</button>
+        <p id="signUpError" class="red-text"></p>
       </form>
     </div>
   </div>
   <!-- LOGIN MODAL -->
   <div id="modal-login" class="modal">
     <div class="modal-content">
-      <h4>Login</h4><br />
+      <h4>Login</h4><br/>
+      <b><p id="loginError" class="red-text"></p></b><br>
       <form id="login-form">
         <div class="input-field">
           <input type="email" id="login-email" required />
@@ -68,8 +86,23 @@
           <input type="password" id="login-password" required />
           <label for="login-password">Your password</label>
         </div>
-        <button class="btn yellow darken-2 z-depth-0">Login</button>
+        <button class="btn orange darken-2 z-depth-0 waves-effect waves-light">Login</button>
       </form>
+    <button class="btn blue darken-2 z-depth-0 waves-effect waves-blue modal-trigger" data-target="lostMyPassword">Parolamı Unuttum</button>
+    </div>
+  </div>
+
+<!-- Lost Password Modal -->
+  <div id="lostMyPassword" class="modal">
+    <div class="modal-content">
+      <h4>Mail Adresinizi Giriniz!</h4>
+      <b><p id="errorOrSuccess"></p></b>
+        <form id="lostPassword">
+          <div class="input-field">
+            <input type="email" id="lostedMail" required>
+          </div>
+          <button class="btn blue darken-2 z-depth-0 waves-effect waves-blue lostMyPassword">Şifre Gönder</button>
+        </form>
     </div>
   </div>
   <!-- ACCOUNT MODAL -->
@@ -80,61 +113,26 @@
       <div class="account-extras"></div>
     </div>
   </div>
-  <!-- CREATE GUIDE MODAL -->
-  <div id="modal-create" class="modal">
-    <div class="modal-content">
-      <h4>Create Guide</h4><br/>
-      <form id="create-form" >
-        <div class="input-field">
-          <input type="text" id="title" required>
-          <label for="title">Guide Title</label>
-        </div>
-        <div class="input-field">
-          <textarea id="content" class="materialize-textarea" required></textarea>
-          <label for="content">Guide Content</label>
-        </div>
-        <button class="btn yellow darken-2 z-depth-0">Create</button>
-      </form>
-    </div>
-  </div>
+  
   <div class="container">
     <ul class="collapsible popout" id="raceList">
 
     </ul>
   </div>
-
-  <!-- Race List -->
-  <div class="container RaceList">
-    <table class="striped">
-        <thead>
-          <tr>
-              <th>Yarış Adı</th>
-              <th>Start Zamanı</th>
-              <th>Talimatlar</th>
-              <th>Tarih</th>
-              <th>Katılımcılar</th>
-              <th>İşlemler</th>
-          </tr>
-        </thead>          
-        <tbody id="raceTable">
-          
-        </tbody>  
-      </table>
-  </div>
   <!-- GUIDE LIST -->
-  <div class="container" style="margin-top: 40px;">
-    <h4>Teknelerim &nbsp;<a class="waves-effect waves-light btn orange modal-trigger" data-target="modal-createYatch">Tekne Ekle</a></h4>
+  <div class="container teknelerimView" style="margin-top: 40px;display:none">
+    <h4><b>Teknelerim</b> &nbsp;<a class="waves-effect waves-light btn orange modal-trigger" href="/register">Tekne Ekle</a></h4>
     <ul class="collapsible z-depth-0 guides" style="border: none;">
       
     </ul>
   </div>
 
   <!--Racer List Modal -->
-  <div class="container" style="margin-top: 40px;">
-    <h4>Yarışçılarım &nbsp;<a class="waves-effect waves-light btn orange modal-trigger" data-target="modal-createCrew">Yarışçı Ekle</a></h4>
+  <div class="container racerListModal" style="margin-top: 40px;display:none">
+    <h4><b>Yarışçılarım</b> &nbsp;<a class="waves-effect waves-light btn orange modal-trigger" data-target="modal-createCrew">Yarışçı Ekle</a></h4>
       <div id="modal-createCrew" class="modal">
     <div class="modal-content">
-      <h4>Yarışçı Kayıt</h4><br />
+      <h4>Yarışçı Kayıt</h4><br/>
       <form id="createRacer">
         <div class="input-field">
           <input type="text" id="racerName" required />
@@ -152,10 +150,27 @@
           <input type="text" id="racerMobile" required />
           <label for="racerMobile">Mobile Number</label>
         </div>
-        <button class="btn yellow darken-2 z-depth-0">Sign Racer</button>
+        <button class="btn orange z-depth-0 waves-effect waves-light">Sign Racer</button>
       </form>
     </div>
   </div>
+  </div>
+
+  <!--Racers List -->
+  <div class="container RacerList">
+    <table class="highlight">
+        <thead>
+          <tr>
+              <th>Name</th>
+              <th>Licence Number</th>
+              <th>Club</th>
+              <th>Mobile</th>
+          </tr>
+        </thead>          
+        <tbody id="racerTable">
+          
+        </tbody>  
+      </table>
   </div>
   <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-auth.js"></script>
@@ -177,9 +192,18 @@
     const db = firebase.firestore();
     // update firestore settings
     db.settings({ timestampsInSnapshots: true });
+
+    function logoutFunc(){
+    
+    console.log("Cikis Yapiyorum!");
+    auth.signOut();
+    window.location.replace("/")
+}
+
   </script>
   <!-- Compiled and minified JavaScript -->
-  <script src="../public/scripts/auth.js"></script>
-  <script src="../public/scripts/materialize.js"></script>
+  <script src="/scripts/materialize.js"></script>
+  <script src="/scripts/auth.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>

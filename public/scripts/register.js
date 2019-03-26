@@ -1,4 +1,26 @@
 const createSail = document.querySelector('#create-sail');
+const fileOne = document.querySelector('#fileOne');
+const fileTwo = document.querySelector('#fileTwo');
+const ircLoader = document.querySelector('#ircLoader');
+const adverLoader = document.querySelector('#adverLoader');
+const uploadFiles = document.querySelector('#uploadFiles');
+var uploadedFileOne;
+var uploadedFileTwo;
+
+//File Upload
+fileOne.addEventListener('change',(e) => {
+    uploadedFileOne = e.target.files[0];
+    console.log(uploadedFileOne);
+})
+
+fileTwo.addEventListener('change',(e) => {
+    uploadedFileTwo = e.target.files[0];
+    console.log(uploadedFileTwo);
+
+})
+
+
+
 auth.onAuthStateChanged(user => {
     if(user){
         createSail.addEventListener('submit', (e) =>{
@@ -25,10 +47,50 @@ auth.onAuthStateChanged(user => {
                 hullMaterial : createSail['hull-material'].value,
                 marinaPonton : createSail['marina-ponton'].value,
                 advertisement : createSail['advertisement'].value,
+                yatchOwnerName : createSail['yatchOwnerName'].value,
+                address : createSail['address'].value,
+                telephone : createSail['telephone'].value,
+                mobile : createSail['mobile'].value,
+                mail : createSail['mail'].value
             }).then(() => {
-                console.log('Form Created')
-            })
-        })
+                
+            });
+            var Counter = 0;    
+            var storageRefOne = firebase.storage().ref(createSail['yatch-name'].value + '/' + uploadedFileOne.name);
+            var task = storageRefOne.put(uploadedFileOne);
+            var a = task.on('state_changed',
+            function progress(snapshot){
+                var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                ircLoader.style.width = percentage + "%";
+            },
+            function error(err){
+                alert(err.message);
+            },
+            function complete(){
+                console.log('File One Completed!');
+                Counter += 1;
+            }
+            );
+            var storageRefTwo = firebase.storage().ref(createSail['yatch-name'].value + '/' + uploadedFileTwo.name);
+            var task2 = storageRefTwo.put(uploadedFileTwo);
+            task2.on('state_changed',
+            function progress(snapshot){
+                var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                adverLoader.style.width = percentage + "%";
+            },
+            function error(err){
+                alert(err.message);
+            },
+            function complete(){
+                console.log('File Two Completed');
+                Counter += 1;
+                a();
+                console.log('Ana Sayfaya Yonlendiriliyorsunuz !')
+                window.location.href = "/";
+            }
+            );
+            
+        });
     }else{
         setupGuides([]);
         setupUI();

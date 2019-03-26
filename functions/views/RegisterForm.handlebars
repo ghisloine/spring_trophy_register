@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <title>Register Form</title>
 </head>
@@ -14,40 +15,40 @@
     <form id="create-sail">
         <div class="container center-align">
         <div class="row">
-            <div class="col s6">
+            <div class="col s12 m6 l6">
                 <br>
-                <img src="../public/images/Bauisc-Logo.png" width="256" height="256" class="animated bounceInLeft">
+                <img src="/images/Bauisc-Logo.png" width="256" height="256" class="animated bounceInLeft">
             </div>
-            <div class="col s6">
+            <div class="col s12 m6 l6">
               <h3 class="indigo-text text-darken-4 animated bounceInRight"><b>BAUISC SPRING TROPHY</b></h3>
-                <h4 class="indigo-text text-darken-4 animated bounceInRight"><b>1.Etap 24-25 Mart</b></h4>
-                <h4 class="indigo-text text-darken-4 animated bounceInRight"><b>RACE REGISTRATION FORM</b></h4>
-                <h5 class="indigo-text text-darken-4 animated bounceInRight">YARIS KAYIT FORMU</h5>
+                <h4 class="indigo-text text-darken-4 animated bounceInRight"><b></b></h4>
+                <h4 class="indigo-text text-darken-4 animated bounceInRight"><b></b></h4>
+                <h5 class="indigo-text text-darken-4 animated bounceInRight">TEKNE KAYIT FORMU</h5>
             </div><br><br>
         </div>
         <div class="row">
             <div class="input-field s12">
                 <p for="first_name" class="left-align"><b>First Name</b></p>
-                <input type="text" placeholder="First Name" id="first-name" class="validate">
+                <input type="text" placeholder="First Name" id="first-name" class="validate" required>
             </div>
             <div class="input-field s12">
                 <p for="first_name" class="left-align"><b>Yatch Name</b></p>
-                <input type="text" placeholder="Yatch Name" id="yatch-name" class="validate">        
+                <input type="text" placeholder="Yatch Name" id="yatch-name" class="validate" required>        
             </div>
             <div class="input-field s12">
                 <p for="first_name" class="left-align"><b>Port And Country</b></p>
-                <input type="text" placeholder="Port And Country" id="port-and-country" class="validate">
+                <input type="text" placeholder="Port And Country" id="port-and-country" class="validate" required>
             </div>
             <div class="input-field s12">
                 <p for="first_name" class="left-align"><b>Sail Number</b></p>
-                <input type="text" placeholder="Sail Number" id="sail-number" class="validate">
+                <input type="text" placeholder="Sail Number" id="sail-number" class="validate" required>
             </div>
         </div>
         <h5 class="blue-text text-darken-2">IRC Bilgileri</h5>
             <div class="row">
                 <div class="input-field s12">
                     <p for="irc-rating" class="left-align"><b>IRC Rating (TCC)</b></p>
-                    <input type="text" placeholder="IRC Reyting" id="irc-rating" class="validate">
+                    <input type="text" placeholder="IRC Reyting" id="irc-rating" class="validate" required>
                 </div>
                 <div class="row">
                     <div class="col s2">
@@ -82,32 +83,32 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <p class="blue-text text-darken-2"><b>NON-IRC Rating(TCF)</b></p>
-                        <p><b>(Gövde Rengi)</b></p>
-                        <input type="text" placeholder="Gezgin Reyting" id="non-irc-rating">
+                        <p><b>(Gezgin Reyting)</b></p>
+                        <input type="text" id="non-irc-rating">
                     </div>
-                    <div class="input-field col s3">
+                    <div class="input-field col s12 m2 l2">
                         <p class="blue-text text-darken-2"><b>Year Of Construction</b></p>
-                        <p><b>(Gövde Rengi)</b></p><br>
-                        <input type="text" name="" id="year-of-construction">
+                        <p><b>(Yapım Yılı)</b></p><br>
+                        <input type="text" name="" id="year-of-construction" >
                     </div>
-                    <div class="input-field col s3">
+                    <div class="input-field col s12 m2 l2">
                         <p class="blue-text text-darken-2"><b>Overall Length(LOA)</b></p>
-                        <p><b>(Gövde Rengi)</b></p><br>
-                        <input type="text" id="overall-length">
+                        <p><b>(Tam Boy)</b></p><br>
+                        <input type="text" id="overall-length" >
                     </div>
-                    <div class="input-field col s2">
+                    <div class="input-field col s12 m2 l2">
                         <p class="blue-text text-darken-2"><b>Spinnaker/Gennaker</b></p>
-                        <p><b>(Gövde Rengi)</b></p><br>
-                        <input type="text" id="spinnaker">
+                        <p><b>(Simetrik/Asimetrik Balon)</b></p><br>
+                        <input type="text" id="spinnaker"   >
                     </div>
-                    <div class="input-field col s2">
+                    <div class="input-field col s12 m2 l2">
                         <p class="blue-text text-darken-2"><b>Folding Propeller</b></p>
-                         <p><b>(Gövde Rengi)</b></p><br>
+                         <p><b>(Katlanır Pervanı)</b></p><br>
                         <input type="text" id="folding-propeller">
                     </div>
-                    <div class="input-field col s2">
+                    <div class="input-field col s12 m2 l2">
                         <p class="blue-text text-darken-2"><b>Daggerboard</b></p>
-                        <p><b>(Gövde Rengi)</b></p><br>
+                        <p><b>(Hareketli Salma)</b></p><br>
                         <input type="text" id="daggerboard">
                     </div>
                 </div>
@@ -130,41 +131,104 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col s2">
+                <div class="col s12 m2 l2">
                     <p class="blue-text text-darken-2"><b>Hull Color</b></p>
                     <p><b>(Gövde Rengi)</b></p><br><br>
                     <input type="text" name="" id="hull-color">
                 </div>
-                <div class="col s2">
+                <div class="col s12 m2 l2">
                     <p class="blue-text text-darken-2"><b>Rig Type</b></p>
                     <p><b>(Arma Tipi)</b></p><br><br>
                     <input type="text" name="" id="rig-type">
                 </div>
-                <div class="col s2">
+                <div class="col s12 m2 l2">
                     <p class="blue-text text-darken-2"><b>Hull Material</b></p>
                     <p><b>(Gövde Materyali)</b></p><br><br>
                     <input type="text" name="" id="hull-material">
                 </div>
-                <div class="col s3">
+                <div class="col s12 m3 l3">
                     <p class="blue-text text-darken-2"><b>Marina Ponton</b></p><br><br><br>
                     <p><b></b></p>
                     <input type="text" name="" id="marina-ponton">
                 </div>
-                <div class="col s3">
+                <div class="col s12 m3 l3">
                     <p class="blue-text text-darken-2"><b>Advertisement</b></p>
                     <p><b>(Reklam Belgesi)</b></p><br><br>
                     <input type="text" name="" id="advertisement">
+                </div><br><br>
+            </div><br><br>
+            <div class="row">
+                    <div class="file-field input-field">
+                        <p><b>Lütfen IRC Belgenizi Yükleyiniz</b></p>
+                        <div class="btn orange">
+                            <span>Yükle</span>
+                            <input type="file" multiple id="fileOne">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                            <div class="progress">
+                                <div class="determinate" style="width: 0%" id="ircLoader"></div>
+                            </div>
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="file-field input-field">
+                        <p><b>Lütfen Reklam Belgenizi Yükleyiniz</b></p>
+                        <div class="btn orange">
+                            <span>Yükle</span>
+                            <input type="file" id="fileTwo">
+                        </div>
+                        <div class="file-path-wrapper" >
+                            <input class="file-path valid" type="text">
+                        </div>
+                        <div class="progress">
+                                <div class="determinate" style="width: 0%" id="adverLoader"></div>
+                            </div>
+                        </div>
+                </div>
+                        <br><br>
+                <hr style="background-color: orange; height: 3px; border: 0;"><br>
+                
+            <div class="row">
+                <div class="input-field col s12">
+                    <b><p class="blue-text text-darken-2">Yacht Owner</p></b>
+                    <b><p class="black-text text-darken-2">Yat Sahibi</p></b>
+                    <input type="text" id="yatchOwnerName" required>
+                </div><br><br>
+                <div class="input-field col s12">
+                    <b><p class="blue-text text-darken-2">Address</p></b>
+                    <b><p class="black-text text-darken-2">Adres</p></b>
+                    <input type="text" id="address" required>
+                </div><br><br>
+                <div class="input-field col s4">
+                    <b><p class="blue-text text-darken-2">Telephone</p></b>
+                    <b><p class="black-text text-darken-2">Telefon Numarası</p></b>
+                    <input type="text" id="telephone" required>
+                </div>
+                <div class="input-field col s4">
+                    <b><p class="blue-text text-darken-2">Mobile</p></b>
+                    <b><p class="black-text text-darken-2">Cep Telefonu</p></b>
+                    <input type="text" id="mobile" required>
+                </div>
+                <div class="input-field col s4">
+                    <b><p class="blue-text text-darken-2">E-Mail</p></b>
+                    <b><p class="black-text text-darken-2">E-Posta</p></b>
+                    <input type="text" id="mail" required>
                 </div>
             </div>
         </div>
-    <button class="btn yellow darken-2 z-depth-0">Create</button>
+        <div class="center">
+            <button class="btn-large orange darken-2 z-depth-5">Oluştur</button><br><br><br><br><br><br><br>
+        </div>
     </form>
-    <button @click="genPDF">Click On Me</button>
     
 </section>
     <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
+
     <script>
     // Initialize Firebase
     var config = {
@@ -183,6 +247,8 @@
     // update firestore settings
     db.settings({ timestampsInSnapshots: true });
   </script>
-  <script src="../public/scripts/register.js"></script>
+  <script src="/scripts/register.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
 </body>
 </html>

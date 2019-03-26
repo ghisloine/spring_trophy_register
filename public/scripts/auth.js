@@ -9,43 +9,10 @@ auth.onAuthStateChanged(user => {
             console.log(err.message);
         });//Bunlari buraya ekleyerek sadece Login olundugunda gorulmesini sagladik.
     }else{
-        setupGuides([]);
+        setupGuides();
         setupUI();
     }
 });
-
-//Races Menusu 
-
-auth.onAuthStateChanged(user => {
-    if(user){
-        db.collection("races").orderBy("raceID", "asc").onSnapshot(snapshot => {
-            setupRaces(snapshot.docs);
-        },err => {
-            console.log(err.message);
-        });//Bunlari buraya ekleyerek sadece Login olundugunda gorulmesini sagladik.
-    }else{
-        setupRaces();
-    }
-});
-
-//Create New Guide
-
-const createForm = document.querySelector('#create-form');
-createForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    db.collection('guides').add({
-        title : createForm['title'].value,
-        content : createForm['content'].value
-    }).then(() => {
-        //Close modal and reset form
-        const modal = document.querySelector('#modal-create');
-        M.Modal.getInstance(modal).close();
-        createForm.reset();
-    }).catch(err => {
-        console.log(err.message);
-    })
-})
 
 // Yarisci Olusturma
 const createRacer = document.querySelector('#createRacer');
@@ -61,12 +28,28 @@ auth.onAuthStateChanged(user => {
                 racerMobile : createRacer['racerMobile'].value
             }).then(() => {
                 console.log('Yarisci Eklendi');
+                const modal = document.querySelector('#modal-createCrew');
+                M.Modal.getInstance(modal).close();
+
             })
         })
     }else{
-        console.log('Error')
+        
     }
 })
+
+//Yarisci Goruntuleme
+auth.onAuthStateChanged(user => {
+    if(user){
+        db.collection('users').doc(user.uid).collection('racer').onSnapshot(snapshot => {
+            setupRacers(snapshot.docs);
+        },err => {
+            console.log(err.message);
+        });//Bunlari buraya ekleyerek sadece Login olundugunda gorulmesini sagladik.
+    }else{
+        
+    }
+});
 
 
 //Signup
@@ -83,26 +66,28 @@ signupForm.addEventListener('submit', (e) => {
     //Sign Up User
     auth.createUserWithEmailAndPassword(email, password).then(cred => {
         console.log(cred.user);
-        return db.collection('users').doc(cred.user.uid).set({
-            bio : signupForm['signup-bio'].value
-        });
     }).then(() => {
         const modal = document.querySelector('#modal-signup');
         M.Modal.getInstance(modal).close();
         signupForm.reset();
+    }).catch((e) =>{
+        const signUpError = document.querySelector('#signUpError');
+        signUpError.innerHTML = e.message;
     })
 });
 
 
 //Logout
-
 const logout = document.querySelector('#logout');
 logout.addEventListener('click', (e) => {
     e.preventDefault();
+
+
+    console.log("Cikis Yapiyorum!");
     auth.signOut();
+    
 
-})
-
+});
 
 //Login
 
@@ -122,8 +107,11 @@ loginForm.addEventListener('submit', (e) => {
             M.Modal.getInstance(modal).close();
             loginForm.reset();
         })
+    }).catch((e) => {
+        const loginError = document.querySelector('#loginError');
+        loginError.innerHTML = e.message;
     })
 
     
 
-})
+});
