@@ -30,7 +30,7 @@ auth.onAuthStateChanged(user => {
                 console.log('Yarisci Eklendi');
                 const modal = document.querySelector('#modal-createCrew');
                 M.Modal.getInstance(modal).close();
-
+                window.location.reload();
             })
         })
     }else{

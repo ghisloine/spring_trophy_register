@@ -12,7 +12,7 @@
 </head>
 <body>
     <section id="All">
-    <form id="create-sail">
+    <form id="create-sail" onsubmit="myButton.disabled = true; return true;">
         <div class="container center-align">
         <div class="row">
             <div class="col s12 m6 l6">
@@ -28,12 +28,12 @@
         </div>
         <div class="row">
             <div class="input-field s12">
-                <p for="first_name" class="left-align"><b>First Name</b></p>
-                <input type="text" placeholder="First Name" id="first-name" class="validate" required>
+                <p for="first_name" class="left-align"><b>Event Name</b></p>
+                <input type="text" placeholder="Event Name" id="first-name" class="validate" required>
             </div>
             <div class="input-field s12">
                 <p for="first_name" class="left-align"><b>Yatch Name</b></p>
-                <input type="text" placeholder="Yatch Name" id="yatch-name" class="validate" required>        
+                <input type="text" placeholder="Yatch Name" id="yatch-name" class="validate" required>
             </div>
             <div class="input-field s12">
                 <p for="first_name" class="left-align"><b>Port And Country</b></p>
@@ -51,27 +51,38 @@
                     <input type="text" placeholder="IRC Reyting" id="irc-rating" class="validate" required>
                 </div>
                 <div class="row">
-                    <div class="col s2">
+                    <div class="col s12">
                         <p><b>According to your IRC rating please choose your IRC class (IRC puanınıza göre ilgili IRC sınıfınızı seçiniz)</b></p>
+                        <p><b>İlgili IRC'nizin altına 'X' işareti koymanız gerekmektedir.</b></p>
+
                     </div>
                     <div class="input-field col s2">
-                        <p><b>IRC-1</b></p>
+                        <p><b class="red-text text-darken-4">IRC-0</b></p>
+                        <p>TCC 1,140 ve üzeri</p>
+                        <input type="text" id="irc-0">
+                    </div>
+                    <div class="input-field col s2">
+                        <p><b class="yellow-text text-darken-3">IRC-1</b></p>
+                        <p>TCC 1,139 - 1,050</p>
                         <input type="text" id="irc-1">
                     </div>
                     <div class="input-field col s2">
-                        <p><b>IRC-2</b></p>
+                        <p><b class="green-text">IRC-2</b></p>
+                        <p>TCC 1,049 - 1,020</p>
                         <input type="text" id="irc-2">
                     </div>
                     <div class="input-field col s2">
-                        <p><b>IRC-3</b></p>
+                        <p><b class="blue-text text-darken-4">IRC-3</b></p>
+                        <p>TCC 1,019 - 0,980</p>
                         <input type="text" id="irc-3">
                     </div>
                     <div class="input-field col s2">
-                        <p><b>IRC-4</b></p>
+                        <p><b class="orange-text">IRC-4</b></p>
+                        <p>TCC 0,979 ve altı</p>
                         <input type="text" id="irc-4">
                     </div>
                     <div class="input-field col s2">
-                        <p><b>GEZGIN</b></p>
+                        <p><b>GEZGIN</b></p><br>
                         <input type="text" id="irc-5">
                     </div>
                 </div>
@@ -162,7 +173,7 @@
                         <p><b>Lütfen IRC Belgenizi Yükleyiniz</b></p>
                         <div class="btn orange">
                             <span>Yükle</span>
-                            <input type="file" multiple id="fileOne">
+                            <input type="file" multiple id="fileOne" required>
                         </div>
                         <div class="file-path-wrapper">
                             <input class="file-path validate" type="text">
@@ -189,7 +200,7 @@
                 </div>
                         <br><br>
                 <hr style="background-color: orange; height: 3px; border: 0;"><br>
-                
+
             <div class="row">
                 <div class="input-field col s12">
                     <b><p class="blue-text text-darken-2">Yacht Owner</p></b>
@@ -219,10 +230,10 @@
             </div>
         </div>
         <div class="center">
-            <button class="btn-large orange darken-2 z-depth-5">Oluştur</button><br><br><br><br><br><br><br>
+            <button id="registerFormSubmit" name="myButton" class="btn-large waves-effect waves-light blue darken-1 z-depth-5">Oluştur</button><br><br><br><br><br><br><br>
         </div>
     </form>
-    
+
 </section>
     <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-auth.js"></script>
@@ -240,7 +251,7 @@
     messagingSenderId: "787246748678"
   };
     firebase.initializeApp(config);
-    
+
     // make auth and firestore references
     const auth = firebase.auth();
     const db = firebase.firestore();

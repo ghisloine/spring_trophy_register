@@ -11,6 +11,17 @@
     <script src=""></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <style>
+        .waiting{
+    color: orange
+}
+.Accepted{
+    color: green
+}
+.Rejected{
+    color: red
+}
+    </style>
     <title>Yarışlar</title>
 </head>
 
@@ -22,7 +33,6 @@
                     <tr>
                         <th>Yarış Adı</th>
                         <th>Start Zamanı</th>
-                        <th>Talimatlar</th>
                         <th>Tarih</th>
                         <th>Katılımcılar</th>
                         
@@ -33,12 +43,10 @@
                 </tbody>
             </table>
         </div>
-        <div >
-            <h3><b>Başvurularım</b></h3>
-        </div>
+        
         <!-- Race Register Modal -->
         <div id="modal-races" class="modal white">
-            <form id="raceRegisterForm">
+            <form id="raceRegisterForm" onsubmit="action.disabled = true; return true;">
             <div class="modal-content row">
                 <h3 class="center orange-text"><b>Spring Trophy</b></h3>               
                 <h3 class="center orange-text"><b>Yarış Kayıt Formu</b></h3><br/>
@@ -46,29 +54,29 @@
                     <h5 class=""><b>Tekne Seçiniz</b></h5>
                     <label for="">(Her seferinde lütfen 1 adet tekne seçiniz.</label><br>
                     <label for="">Eğer tekneniz gözükmüyorsa lütfen anasayfadan tekne ekleyiniz.)</label>
-                    <div id="yacthSelectionField">
+                    <div id="yacthSelectionField" aria-required="true">
 
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s4">
                         <h5><b>Skipper Seçiniz</b></h5>
-                        <label for="">(Lütfen 1 adet seçiniz)</label>
-                        <div id="skipperSelectionField">
+                        <label for=""></label>
+                        <div id="skipperSelectionField" aria-required="true">
 
                         </div>
                     </div>
                     <div class="col s4">
                         <h5><b>Navigator Seçiniz</b></h5>
-                        <label for="">(Lütfen 1 adet seçiniz)</label>
-                        <div id="navigatorSelectionField">
+                        <label for=""></label>
+                        <div id="navigatorSelectionField" aria-required="true">
 
                         </div>
                     </div>
                     <div class="col s4">
                         <h5><b>Mürettebat Seçiniz</b></h5>
                         <label for="">(Skipper ve Navigator dışındaki yarış ekibi)</label>
-                        <div id="racerSelectionField">
+                        <div id="racerSelectionField" aria-required="true">
 
                         </div>
                     </div>
@@ -78,7 +86,7 @@
                         <p><b>Yarış Dekontunu Yükleyin</b></p>
                         <div class="btn orange">
                             <span>Dosya</span>
-                            <input type="file" multiple id="fileThree">
+                            <input type="file" id="fileThree" required multiple>
                         </div>
                         <div class="file-path-wrapper">
                             <input class="file-path validate" type="text" placeholder="Dekont">
@@ -99,7 +107,7 @@
                 </div>
                 <p>
                         <label>
-                            <input type="checkbox" onclick="kullanimKosullari(this)"/>
+                            <input type="checkbox" onclick="kullanimKosullari(this)" required/>
                             <span><b>Yukarıdaki kullanım koşullarını okudum kabul ediyorum</b></span>
                         </label>
                     </p>
@@ -110,10 +118,39 @@
                 <button class="btn waves-effect waves-light orange raceRegistrationButton disabled" type="submit" name="action">Gönder
                     <i class="material-icons right">send</i>
                 </button>
+                <p><b id="errorText" class="red-text"></b></p>
                 </form>
             </div>
-
+        
         </div>
+        <div id="modal-yat" class="modal white">
+            <div class="modal-content">
+
+                <h3 class="center"><b>BAUISC</b></h3>
+                <h3 class="center"><b>Spring Trophy</b></h3>
+                <h4 class="center orange-text" id="raceName"></h4>
+                <h4 class="center" id="raceDay"></h4>
+                <h4 class="center" id="raceHour"></h4>
+                <table class="centered">
+                    <thead>
+                        <tr>
+                            <th class="blue-text darken-2"><h5>Yacht Name</h5></th>
+                            <th class="blue-text darken-2"><h5>Skipper Name</h5></th>
+                            <th class="blue-text darken-2"><h5>Navigator Name</h5></th>
+                            <th class="blue-text darken-2"><h5>Situation</h5></th>
+                        </tr>
+                    </thead>
+                    <tbody id="participantInfo">
+
+                    </tbody>
+                </table>
+            </div>
+            
+        </div><br><br><br>
+        <h5 class="center"><b>Ek Talimatlar <a href="https://www.bauisc.org">BAUISC Websitesinden</a> ilan edilecektir. </b></h5>
+        <h5 class="center"><b>Sorun ve Bilgilendirme için : <span class="blue-text">info@bauisc.org</span> </b></h5>
+        <h5 class="center"><b>**Yarış Kaydı yaptıktan sonra dekont göndermek isteyenler için : <span class="blue-text">yariskayit@bauisc.org</span> </b></h5>
+
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-app.js"></script>

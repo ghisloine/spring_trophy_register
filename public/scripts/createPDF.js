@@ -78,8 +78,8 @@ var racerMobile = arr.map((item) => {
             {
                 table : {
                     body : [
-                        ['IRC-0','IRC-1','IRC-2','IRC-3','IRC-4'],
-                        [yacthArray[0].irc1,yacthArray[0].irc2,yacthArray[0].irc3,yacthArray[0].irc4,yacthArray[0].irc5]
+                        ['IRC-0','IRC-1','IRC-2','IRC-3','IRC-4','GEZGİN'],
+                        [yacthArray[0].irc0,yacthArray[0].irc1,yacthArray[0].irc2,yacthArray[0].irc3,yacthArray[0].irc4,yacthArray[0].irc5]
                     ]
                 }
             },

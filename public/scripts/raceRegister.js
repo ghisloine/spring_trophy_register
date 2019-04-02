@@ -8,11 +8,15 @@ const yacthSelectionField = document.querySelector('#yacthSelectionField');
 const raceRegistrationButton = document.querySelector('.raceRegistrationButton');
 const crewSubmisson = document.querySelector('.crewSubmission');
 const dekontLoader = document.querySelector('#dekontLoader');
+const applicationTable = document.querySelector('#applicationTable');
+const participantInfo = document.querySelector('#participantInfo');
+const errorText = document.querySelector('#errorText');
+
 
 
 
 let raceFormID;
-
+let participleRaceID;
 auth.onAuthStateChanged(user => {
     if(user){
         db.collection("races").orderBy("raceID", "asc").onSnapshot(snapshot => {
@@ -23,20 +27,19 @@ auth.onAuthStateChanged(user => {
                 <tr data-id = ${doc.id}>
                     <td>${race.raceName}</td>
                     <td>${race.start}</td>
-                    <td>${race.talimatlar}</td>
                     <td>${race.tarih}</td>
-                    <td><button class="btn waves-effect waves-light orange disable" type="submit">Göster</button></td>
-                    <td><button class="btn waves-effect waves-light blue modal-trigger" type="submit" data-target='modal-races' onclick ='changeFormID("${doc.id}")'>Katıl</button></td>
-                </tr>  
+                    <td><button data-target='modal-yat' class="btn waves-effect waves-light orange modal-trigger" onclick ='raceParticipleID("${doc.id}")' type="submit" >Göster</button></td>
+                    <td><button data-target='modal-races' class="btn waves-effect waves-light blue modal-trigger" type="submit" onclick ='changeFormID("${doc.id}")'>Katıl</button></td>
+                </tr>
                 `;
                 html += li;
-            })
+            });
             raceList.innerHTML = html;
         },err => {
             console.log(err.message);
         });
         //Race Situatuon
-        
+
         //Skipper Rendering
         db.collection('users').doc(user.uid).collection('racer').onSnapshot(snapshot => {
             let html = '';
@@ -45,13 +48,13 @@ auth.onAuthStateChanged(user => {
                 const option = `
                     <p>
                         <label>
-                            <input name='skipper' value='${racer.racerName}' data-id='${doc.id}' type="checkbox" onclick="skipperLock(this)"/>
+                            <input name='skipper' value='${racer.racerName}' data-id='${doc.id}' type="checkbox" onclick="skipperLock(this)" required/>
                             <span>${racer.racerName}</span>
                         </label>
                     </p>
                 `;
                 html += option;
-            });           
+            });
             skipperSelectionField.innerHTML = html;
         },err => {
             console.log(err.message);
@@ -64,13 +67,13 @@ auth.onAuthStateChanged(user => {
                 const option = `
                     <p>
                         <label>
-                            <input name='navigator' value='${racer.racerName}' data-id='${doc.id}' type="checkbox" onclick="navigatorLock(this)"/>
+                            <input name='navigator' value='${racer.racerName}' data-id='${doc.id}' type="checkbox" onclick="navigatorLock(this)" required/>
                             <span>${racer.racerName}</span>
                         </label>
                     </p>
                 `;
                 html += option;
-            });           
+            });
             navigatorSelectionField.innerHTML = html;
         },err => {
             console.log(err.message);
@@ -89,7 +92,7 @@ auth.onAuthStateChanged(user => {
                     </p>
                 `;
                 html += option;
-            });           
+            });
             racerSelectionField.innerHTML = html;
         },err => {
             console.log(err.message);
@@ -114,9 +117,27 @@ auth.onAuthStateChanged(user => {
             yacthSelectionField.innerHTML = html;
         });
 
+        //Application Render
+        /*db.collection('users').doc(user.uid).collection('application').onSnapshot(snapshot => {
+            let html = '';
+            snapshot.docs.forEach(doc => {
+                const application = doc.data();
+                const applicationList = `
+                <tr data-id = ${doc.id}>
+                    <td>${application.skipper.racerName}</td>
+                    <td>${application.navigator.racerName}</td>
+                    <td>${application.crew}
+                    <td>${application.yacth.yatchName}</td>
+                    <td>${application.raceName}</td>
+                </tr>
+                `
+                html += applicationList;
+            })
+            applicationTable.innerHTML = html; 
+        })*/
 
-
-
+        // Yarisan Tekneler Modal Render
+        
 
 // Ekibi Onayliyorum
 
@@ -138,28 +159,43 @@ fileThree.addEventListener('change',(e) => {
     console.log(uploadedFileThree);
 
 });
+
+var documentRef;
 // Submit Button
-raceRegistrationButton.addEventListener('click', (e) => {
+raceRegisterForm.addEventListener('submit', (e) => {
             e.preventDefault();
             //crewArray değeri seçilen yarışçıların data-id değerlerini taşıyor.
             // Crew Listesinde secilen kisileri burda aliyoruz.
-            // 
+            
+
+
             db.collection('races').doc(raceFormID).collection('racing-teams').add({
                 skipper : skipperArray[0],
                 navigator : navigatorArray[0],
                 crew : crewArray,
                 yacth : yacthArray,
-                situation : 'waiting'
+                situation : 'waiting',
+                raceName : raceName
+            }).then((docRef) =>{
+                console.log("Document written with ID: ",docRef.id);
+                // Adding Data To Applications
             }).catch((err) => {
                 console.log(err.message);
             });
             M.toast({html: 'Yarışçı Kayıtlarınız Yapıldı!'})
+            M.toast({html: 'Lütfen Belgeniz Yüklenirken Bekleyin!'})
+            
 
             createPDF(yacthArray, skipperArray, navigatorArray, crewArray);
             
+            try {
+                var storageRefThree = firebase.storage().ref(yatchNameField + '/' + uploadedFileThree.name);
+                var task = storageRefThree.put(uploadedFileThree);
+            } catch (error) {
+                errorText.innerHTML = 'Dosya Yüklemesi Başarısız Lütfen Tekrar Deneyin !';
+            }
             
-            var storageRefThree = firebase.storage().ref(yatchNameField + '/' + uploadedFileThree.name);
-            var task = storageRefThree.put(uploadedFileThree);
+            
             task.on('state_changed',
             function progress(snapshot){
                 var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -172,19 +208,22 @@ raceRegistrationButton.addEventListener('click', (e) => {
                 console.log('Dosya Yuklenmesi Tamamlandi!');
                 const modal = document.querySelector('#modal-races');
                 M.Modal.getInstance(modal).close();
-                M.toast({html: 'Dekont Yüklemeniz Gerçekleşti!'})
-                M.toast({html: 'Birazdan Anasayfaya Yönlendirileceksiniz'})
-                setTimeout(window.location.replace("/"),5000);
-                
-            }
-            )
-            
+                M.toast({html: 'Dekont Yüklemeniz Gerçekleşti!'});
+                M.toast({html: 'Sonucu Görmek için Lütfen Sayfayı Yenileyiniz'});
+                //setTimeout(window.location.replace("/"),5000);
+
+                } // Complete Ending
+            ) // Task Ending
+
+
+            // Users'a basvurularim ekleme
+
         });
     }else{
-        console.log('Hata');
-        
+        errorText.innerHTML = e.message;
+
     }
-    
+
 });
 
 skipperArray = [];
@@ -198,8 +237,8 @@ function kullanimKosullari(){
 }
 var yatchNameField;
 //Yatch Register
-function yacthLock(el){   
-    
+function yacthLock(el){
+
     var ckName = document.getElementsByName(el.name);
         for (var i = 0, c; c = ckName[i]; i++) {
          c.disabled = !(!el.checked || c === el);
@@ -209,14 +248,14 @@ function yacthLock(el){
                 yacthArray.push(doc.data());
                 yatchNameField = yacthArray[0].yatchName
             });
-           
+
         }else{
             console.log('Hata');
             yacthArray.pop();
         }
 }
 //Skipper CheckBox
-function skipperLock(el){   
+function skipperLock(el){
     var ckName = document.getElementsByName(el.name);
         for (var i = 0, c; c = ckName[i]; i++) {
         c.disabled = !(!el.checked || c === el);
@@ -240,8 +279,8 @@ function skipperLock(el){
         })
     }
 // Navigator CheckBox
-function navigatorLock(el){   
-    
+function navigatorLock(el){
+
     var ckName = document.getElementsByName(el.name);
         for (var i = 0, c; c = ckName[i]; i++) {
             c.disabled = !(!el.checked || c === el);
@@ -265,14 +304,41 @@ function navigatorLock(el){
 function changeFormID(id){
     raceRegisterForm.setAttribute('data-id',id);
 }
+function raceParticipleID(id) {
+   participleRaceID = id;
+   db.collection('races').doc(participleRaceID).get().then((doc) => {
+        document.querySelector('#raceName').innerHTML = doc.data().raceName
+        document.querySelector('#raceDay').innerHTML = doc.data().tarih
+        document.querySelector('#raceHour').innerHTML = doc.data().start
+        
+
+   })
+   db.collection('races').doc(participleRaceID).collection('racing-teams').onSnapshot(snapshot => {
+    let html = '';
+            snapshot.docs.forEach(doc => {
+                const racer = doc.data();
+                const option = `
+                <tr>
+                    <td><b>${racer.yacth[0].yatchName}</b></td>
+                    <td>${racer.skipper.racerName}</td>
+                    <td>${racer.navigator.racerName}</td>
+                    <td class = '${racer.situation}'>${racer.situation}</td>
+                <tr>
+                `;
+                html += option;
+            });
+            participantInfo.innerHTML = html;
+})
+}
+
 document.addEventListener('DOMContentLoaded', function() {
 
     var modals = document.querySelectorAll('.modal');
     M.Modal.init(modals);
-  
+
     var items = document.querySelectorAll('.collapsible');
     M.Collapsible.init(items);
-  
+
   });
 
   document.addEventListener('DOMContentLoaded', function() {

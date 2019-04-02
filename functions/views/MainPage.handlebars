@@ -9,12 +9,14 @@
 
   <title>Spring Trophy</title>
 </head>
-<body class="white lighten-3">
+<body class="grey lighten-5">
   <!-- NAVBAR -->
-  <nav class="z-depth-0 orange lighten-1">
+  <nav class="z-depth-0 blue darken-1">
     <div class="nav-wrapper container">
-      <a href="#" class="brand-logo white-text">Spring Trophy Registration Page</a>
+      <a href="#" class="brand-logo"><img src="/images/Bauisc-Logo.png" width="60"></a>
+      <a href="#" class="brand-logo white-text center hide-on-med-and-down"> <span class="">Spring Trophy </span>Registration</a>
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="large material-icons">dehaze</i></a>
+
       <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li class="logged-in" style="display:none">
             <a href="#" class="white-text modal-trigger" data-target="modal-account"><b>Account</b></a>
@@ -35,25 +37,28 @@
       </ul>
     </div>
   </nav>
+  
   <!--Mobile Navbar -->
   <ul class="sidenav" id="mobile-demo"><br>
     <li class="logged-in" style="display:none">
-            <a href="#" class="white-text modal-trigger orange" data-target="modal-account"><b>Account</b></a>
+            <a href="#" class="white-text modal-trigger blue darken-1" data-target="modal-account"><b>Account</b></a>
           </li><br>
           <li class="logged-in" style="display:none">
-            <a href="#" class="white-text orange" id="logoutMobile" onclick="logoutFunc()"><b>Logout</b></a>
+            <a href="#" class="white-text blue darken-1" id="logoutMobile" onclick="logoutFunc()"><b>Logout</b></a>
           </li><br>
           <li class="logged-in" style="display:none">
-            <a href="/races" class="white-text modal-trigger orange"><b>Yarışlar</b></a>
+            <a href="/races" class="white-text modal-trigger blue darken-1"><b>Yarışlar</b></a>
           </li><br>
           <li class="logged-out" style="display:none">
-            <a href="#" class="white-text modal-trigger orange" data-target="modal-login"><b>Login</b></a>
+            <a href="#" class="white-text modal-trigger blue darken-1" data-target="modal-login"><b>Login</b></a>
           </li><br>
           <li class="logged-out" style="display:none">
-            <a href="#" class="white-text modal-trigger orange" data-target="modal-signup"><b>Sign up</b></a>
+            <a href="#" class="white-text modal-trigger blue darken-1" data-target="modal-signup"><b>Sign up</b></a>
           </li>
   </ul>
-          
+  <div class="container">
+    <h4 class="center"><b><a class="red-text" href="https://firebasestorage.googleapis.com/v0/b/spring-trophy-mail-892ec.appspot.com/o/Kilavuz.pdf?alt=media&token=db9326d4-76df-4ed9-9816-1818e14f892d" target="_blank">Kullanım Kılavuzu İçin Tıklayın !</a></b></h4>
+  </div>
   <!-- SIGN UP MODAL -->
   <div id="modal-signup" class="modal">
     <div class="modal-content">
@@ -113,7 +118,7 @@
       <div class="account-extras"></div>
     </div>
   </div>
-  
+
   <div class="container">
     <ul class="collapsible popout" id="raceList">
 
@@ -121,15 +126,14 @@
   </div>
   <!-- GUIDE LIST -->
   <div class="container teknelerimView" style="margin-top: 40px;display:none">
-    <h4><b>Teknelerim</b> &nbsp;<a class="waves-effect waves-light btn orange modal-trigger" href="/register">Tekne Ekle</a></h4>
+    <h4><b>Teknelerim</b> &nbsp;<a class="waves-effect waves-light btn blue darken-1 modal-trigger" href="/register">Tekne Ekle</a></h4>
     <ul class="collapsible z-depth-0 guides" style="border: none;">
-      
     </ul>
   </div>
 
   <!--Racer List Modal -->
   <div class="container racerListModal" style="margin-top: 40px;display:none">
-    <h4><b>Yarışçılarım</b> &nbsp;<a class="waves-effect waves-light btn orange modal-trigger" data-target="modal-createCrew">Yarışçı Ekle</a></h4>
+    <h4><b>Yarışçılarım</b> &nbsp;<a class="waves-effect waves-light btn blue darken-1 modal-trigger" data-target="modal-createCrew">Yarışçı Ekle</a></h4>
       <div id="modal-createCrew" class="modal">
     <div class="modal-content">
       <h4>Yarışçı Kayıt</h4><br/>
@@ -147,7 +151,7 @@
           <label for="racerClub">Club</label>
         </div>
         <div class="input-field">
-          <input type="text" id="racerMobile" required />
+          <input type="text" id="racerMobile" />
           <label for="racerMobile">Mobile Number</label>
         </div>
         <button class="btn orange z-depth-0 waves-effect waves-light">Sign Racer</button>
@@ -166,12 +170,44 @@
               <th>Club</th>
               <th>Mobile</th>
           </tr>
-        </thead>          
+        </thead>
         <tbody id="racerTable">
-          
-        </tbody>  
+
+        </tbody>
       </table>
   </div>
+
+
+<!-- Silmek Istedigine emin misin ! YATCH -->
+  <div>
+    <div id="are-you-sure-modal" class="modal">
+    <div class="modal-content">
+      <h4><b>Silmek istediğine emin misin ?</b></h4>
+      <br>
+    </div>
+    <div class="modal-footer">
+      <a id="yesSureDelete" class="waves-effect waves-light btn orange modal-close" onclick="deleteYacth()">SİL</a>
+      <a class="waves-effect waves-light btn blue modal-close">İPTAL</a>
+    </div>
+  </div>
+  </div>
+  <!--Silmek Istedigine Emin Misin ! Racer-->
+<div>
+    <div id="are-you-sure-racer-modal" class="modal">
+    <div class="modal-content">
+      <h4><b>Silmek istediğine emin misin ?</b></h4>
+      <br>
+    </div>
+    <div class="modal-footer">
+      <a id="yesSureDelete" class="waves-effect waves-light btn orange modal-close" onclick="deleteRacer()">SİL</a>
+      <a class="waves-effect waves-light btn blue modal-close">İPTAL</a>
+    </div>
+  </div>
+  </div>
+
+
+
+
   <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-firestore.js"></script>
@@ -186,7 +222,7 @@
     messagingSenderId: "787246748678"
   };
     firebase.initializeApp(config);
-    
+
     // make auth and firestore references
     const auth = firebase.auth();
     const db = firebase.firestore();
@@ -194,7 +230,7 @@
     db.settings({ timestampsInSnapshots: true });
 
     function logoutFunc(){
-    
+
     console.log("Cikis Yapiyorum!");
     auth.signOut();
     window.location.replace("/")

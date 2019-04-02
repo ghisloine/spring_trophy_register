@@ -4,21 +4,60 @@ const fileTwo = document.querySelector('#fileTwo');
 const ircLoader = document.querySelector('#ircLoader');
 const adverLoader = document.querySelector('#adverLoader');
 const uploadFiles = document.querySelector('#uploadFiles');
+
 var uploadedFileOne;
 var uploadedFileTwo;
 
 //File Upload
 fileOne.addEventListener('change',(e) => {
     uploadedFileOne = e.target.files[0];
+    var storageRefOne = firebase.storage().ref(createSail['yatch-name'].value + '/' + uploadedFileOne.name);
+            var task = storageRefOne.put(uploadedFileOne);
+            task.on('state_changed',
+            function progress(snapshot){
+                var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                ircLoader.style.width = percentage + "%";
+                document.querySelector('#registerFormSubmit').classList.add('disabled');
+            },
+            function error(err){
+                alert(err.message);
+            },
+            function complete(){
+                console.log('File One Completed!');
+                var Toast = '<span>IRC Belgesi Eklenmiştir</span>';
+                M.toast({html: Toast});
+                document.querySelector('#registerFormSubmit').classList.remove('disabled');
+
+            }
+            );
     console.log(uploadedFileOne);
 })
 
 fileTwo.addEventListener('change',(e) => {
     uploadedFileTwo = e.target.files[0];
+    var storageRefTwo = firebase.storage().ref(createSail['yatch-name'].value + '/' + uploadedFileTwo.name);
+            var task2 = storageRefTwo.put(uploadedFileTwo);
+            task2.on('state_changed',
+            function progress(snapshot){
+                var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                adverLoader.style.width = percentage + "%";
+                document.querySelector('#registerFormSubmit').classList.add('disabled');
+
+            },
+            function error(err){
+                alert(err.message);
+            },
+            function complete(){
+                console.log('File Two Completed');
+                var Toast = '<span>Reklam Belgesi Eklenmiştir</span>';
+                M.toast({html: Toast});
+                document.querySelector('#registerFormSubmit').classList.remove('disabled');
+
+            }
+            );
     console.log(uploadedFileTwo);
 
 })
-
 
 
 auth.onAuthStateChanged(user => {
@@ -26,11 +65,12 @@ auth.onAuthStateChanged(user => {
         createSail.addEventListener('submit', (e) =>{
             e.preventDefault();
             db.collection('users').doc(user.uid).collection('yatch').add({
-                firstName : createSail['first-name'].value,
+                eventName : createSail['first-name'].value,
                 yatchName : createSail['yatch-name'].value,
                 portAndCountry : createSail['port-and-country'].value,
                 sailNumber : createSail['sail-number'].value,
                 ircRating : createSail['irc-rating'].value,
+                irc0 : createSail['irc-0'].value,
                 irc1 : createSail['irc-1'].value,
                 irc2 : createSail['irc-2'].value,
                 irc3 : createSail['irc-3'].value,
@@ -53,43 +93,12 @@ auth.onAuthStateChanged(user => {
                 mobile : createSail['mobile'].value,
                 mail : createSail['mail'].value
             }).then(() => {
-                
+
             });
-            var Counter = 0;    
-            var storageRefOne = firebase.storage().ref(createSail['yatch-name'].value + '/' + uploadedFileOne.name);
-            var task = storageRefOne.put(uploadedFileOne);
-            var a = task.on('state_changed',
-            function progress(snapshot){
-                var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                ircLoader.style.width = percentage + "%";
-            },
-            function error(err){
-                alert(err.message);
-            },
-            function complete(){
-                console.log('File One Completed!');
-                Counter += 1;
-            }
-            );
-            var storageRefTwo = firebase.storage().ref(createSail['yatch-name'].value + '/' + uploadedFileTwo.name);
-            var task2 = storageRefTwo.put(uploadedFileTwo);
-            task2.on('state_changed',
-            function progress(snapshot){
-                var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                adverLoader.style.width = percentage + "%";
-            },
-            function error(err){
-                alert(err.message);
-            },
-            function complete(){
-                console.log('File Two Completed');
-                Counter += 1;
-                a();
-                console.log('Ana Sayfaya Yonlendiriliyorsunuz !')
-                window.location.href = "/";
-            }
-            );
-            
+            var Toast2= '<span>Ana Sayfaya Yönlendiriliyorsunuz!...</span>';
+            M.toast({html : Toast2});
+            setTimeout(function(){ window.location.replace('/') }, 5000);
+
         });
     }else{
         setupGuides([]);
